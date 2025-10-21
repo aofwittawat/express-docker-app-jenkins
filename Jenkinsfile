@@ -65,10 +65,14 @@ pipeline {
         // Stage 2: ติดตั้ง dependencies และรันเทสต์
         stage('Install & Test') {
             steps {
-                sh '''
-                    npm install
-                    npm test
-                '''
+                script {
+                    docker.image('node:22-alpine').inside {
+                        sh '''
+                            npm install
+                            npm test
+                        '''
+                    }
+                }
             }
         }
 
